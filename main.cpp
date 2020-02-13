@@ -4,16 +4,17 @@
 #include "networkit/graph/Graph.hpp"
 #include "networkit/graph/DFS.hpp"
 #include "networkit/graph/KruskalMSF.hpp"
-#include "networkit/io/EdgeListReader.hpp"
+#include "TSPLib/TSPGraphReader.h"
 
 using namespace NetworKit;
 
 int main() {
 
+    Graph g = TSPGraphReader("../samples/grafo15.edges").getGraph();
     //reader per .edges file
-    const std::string path = "../samples/grafo5.edges";
-    EdgeListReader graphReader = EdgeListReader(' ', 0, "#", true, false);
-    Graph g = graphReader.read(path);
+//    const std::string path = "../samples/grafo5.edges";
+//    EdgeListReader graphReader = EdgeListReader(' ', 0, "#", true, false);
+//    Graph g = graphReader.read(path);
 
     std::cout << g.numberOfEdges() << std::endl;
     std::cout << g.numberOfNodes() << std::endl;

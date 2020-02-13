@@ -7,29 +7,60 @@
 
 #include "networkit/graph/Graph.hpp"
 #include "networkit/graph/KruskalMSF.hpp"
+#include <iostream>
 
 using namespace NetworKit;
 
 class KruskalMST {
 
-    private:
-        /**
-         *  g is the graph whose you want to calculate its Minimum Spanning Tree (MST)
-         */
-        Graph g;
+private:
+    /**
+     *  g is a complete graph with non-negative weights  whose you want to calculate its Minimum Spanning Tree (MST)
+     */
+    Graph g;
 
-    public:
-        /**
-         * Constructor
-         * @param graph complete graph with non-negative weights
-         */
-        KruskalMST(Graph graph);
+public:
 
+    /**
+     * @public
+     * @brief Constructor
+     * @param g complete graph with non-negative weights
+     */
+    explicit KruskalMST(const Graph& g);
 
-        KruskalMSF  calculateMST(Graph graph);
+    /**
+     * @public
+     * @brief get the graph
+     * @return a complete graph with non-negative weights
+     */
+    const Graph &getG() const;
 
-        ~KruskalMST();
+    /**
+     * @public
+     * @brief set the graph
+     * @param g a complete graph with non-negative weights
+     */
+    void setG(const Graph &g);
 
+    /**
+     * @public
+     * @brief Calculate the MST of the graph using NetworKit::KruskalMSF(graph)
+     * @return NetworKit::KruskalMSF the minimum spanning tree
+     */
+    KruskalMSF calculateMST();
+
+    /**
+     * @public
+     * @brief Destructor
+     */
+    ~KruskalMST() = default;
+
+private:
+    /**
+     * @private
+     * @brief Deny the weights of the graph
+     */
+    void invertGraphWeights();
 };
 
 

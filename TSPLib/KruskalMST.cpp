@@ -5,16 +5,33 @@
 #include "KruskalMST.h"
 
 
-KruskalMST::KruskalMST(Graph graph) {
-
+KruskalMST::KruskalMST(const Graph& g) {
+    KruskalMST::setG(g);
 }
 
-KruskalMST::~KruskalMST() {
-
+const Graph &KruskalMST::getG() const {
+    return g;
 }
 
-KruskalMSF KruskalMST::calculateMST(Graph graph) {
-    return KruskalMSF(NetworKit::Graph());
+void KruskalMST::setG(const Graph &g) {
+    KruskalMST::g = g;
 }
+
+KruskalMSF KruskalMST::calculateMST() {
+    // invert graph weights because NetworKit::KruskalMSF() sorts in non decreasing way
+    KruskalMST::invertGraphWeights();
+
+    // calculate MST
+    NetworKit::KruskalMSF t = NetworKit::KruskalMSF(g);
+    t.run();
+
+    return t;
+}
+
+void KruskalMST::invertGraphWeights() {
+    g.forEdges([&](node u, node v, edgeweight w) { g.setWeight(u, v, -w); });
+}
+
+
 
 

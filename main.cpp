@@ -3,14 +3,15 @@
 #include <algorithm>
 #include "networkit/graph/Graph.hpp"
 #include "networkit/graph/DFS.hpp"
-#include "networkit/graph/KruskalMSF.hpp"
 #include "TSPLib/TSPGraphReader.h"
+#include "TSPLib/KruskalMST.h"
+
 
 using namespace NetworKit;
 
 int main() {
 
-    Graph g = TSPGraphReader("../samples/grafo15.edges").getGraph();
+    Graph g = TSPGraphReader("../samples/grafo5.edges").getGraph();
     //reader per .edges file
 //    const std::string path = "../samples/grafo5.edges";
 //    EdgeListReader graphReader = EdgeListReader(' ', 0, "#", true, false);
@@ -32,12 +33,15 @@ int main() {
 
     // todo vedere se il costo del MST è sempre minore del costo ottimo
 
-    //nega i pesi degli archi altrimenti Kruskal restituisce il maximum spanning tree
+    /*//nega i pesi degli archi altrimenti Kruskal restituisce il maximum spanning tree
     g.forEdges([&](node u, node v, edgeweight w) { g.setWeight(u, v, -w); });
 
     NetworKit::KruskalMSF t = NetworKit::KruskalMSF(g);
-    t.run();
+    t.run();*/
+    NetworKit::KruskalMSF t = KruskalMST(g).calculateMST();
 
+    //g.forEdges([&](node u, node v, edgeweight w) { std::cout<<"arco: (" << u<<","<<v<<" ) " <<w<<std::endl; });
+    t.getForest().forEdges([&](node u, node v, edgeweight w) { std::cout<<"arco: (" << u<<","<<v<<" ) " <<w<<std::endl; });
 
     // todo: per irrobustire l'algoritmo possiamo controllare che il costo del MST sia <= del costo del TSP (validità data dalla dimostrazione dell'algortimo 2-approx)
 
@@ -60,8 +64,7 @@ int main() {
     while (i < H.size() - 1) {
         node u = H.at(i);
         node v = H.at(i + 1);
-        double weight = -g.weight(u, v);
-        tsp.addEdge(u, v, weight);
+        tsp.addEdge(u, v, g.weight(u, v));
         i = i + 1;
     }
 

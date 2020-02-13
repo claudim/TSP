@@ -5,12 +5,14 @@
 #include "networkit/graph/DFS.hpp"
 #include "networkit/graph/KruskalMSF.hpp"
 #include "TSPLib/TSPGraphReader.h"
+#include "TSPLib/Checker.h"
 
 using namespace NetworKit;
 
 int main() {
 
-    Graph g = TSPGraphReader("../samples/grafo15.edges").getGraph();
+    TSPGraphReader gr = TSPGraphReader();
+    Graph g = gr.getGraph("../samples/grafo15.edges");
     //reader per .edges file
 //    const std::string path = "../samples/grafo5.edges";
 //    EdgeListReader graphReader = EdgeListReader(' ', 0, "#", true, false);
@@ -20,14 +22,20 @@ int main() {
     std::cout << g.numberOfNodes() << std::endl;
 
     // check for completed graph
-    int n = g.numberOfNodes();
-    if(g.numberOfEdges() != n*(n-1)/2 )
+    Checker ck;
+    if(!ck.isComplete(g))
     {
-        // error: graph not complete
-        std::cout << "graph not complete" << std::endl;
+        std::cout<< "Input grpah in not complete.";
         return 0;
-
     }
+//    int n = g.numberOfNodes();
+//    if(g.numberOfEdges() != n*(n-1)/2 )
+//    {
+//        // error: graph not complete
+//        std::cout << "graph not complete" << std::endl;
+//        return 0;
+//
+//    }
     // todo check pesi tutti non negativi
 
     // todo vedere se il costo del MST è sempre minore del costo ottimo

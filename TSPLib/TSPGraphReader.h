@@ -14,21 +14,16 @@ public:
 
     /**
      * @brief constructor
-     * @param filename name of the graph file to be loaded
      */
-    TSPGraphReader(const std::string &filename);
+    TSPGraphReader();
 
 
     /**
      * @brief Get method Graph member
+     * @param filename name of the file
      * @return Graph member
      */
-    const NetworKit::Graph &getGraph() const;
-
-
-private:
-
-    NetworKit::Graph m_graph;
+    const NetworKit::Graph getGraph(const std::string &filename) const;
 
 };
 

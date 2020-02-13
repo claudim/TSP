@@ -24,8 +24,8 @@ namespace {
 
 }
 
-const NetworKit::Graph &TSPGraphReader::getGraph() const {
-    return m_graph;
+const NetworKit::Graph TSPGraphReader::getGraph(const std::string &filename) const {
+    return readEdgesList(filename);
 }
 
-TSPGraphReader::TSPGraphReader(const std::string &filename) : m_graph(readEdgesList(filename)) {}
+TSPGraphReader::TSPGraphReader(){}

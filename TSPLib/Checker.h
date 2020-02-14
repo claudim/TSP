@@ -33,6 +33,7 @@ public:
      */
     bool isNonNegativeWeights(const NetworKit::Graph &g);
 
+
 };
 
 

@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include "networkit/graph/Graph.hpp"
 #include "TSPLib/TSPGraphReader.h"
 #include "TSPLib/Checker.h"
@@ -24,10 +23,12 @@ int main() {
         std::cout<< "Input graph is not complete.";
         return 0;
     }
-
-    std::cout <<ck.isNonNegativeWeights(g)<<std::endl;
-
-    // todo vedere se il costo del MST è sempre minore o uguale del costo ottimo (validità data dalla dimostrazione dell'algortimo 2-approx)
+    // check for non-negative weights
+    if(!ck.isNonNegativeWeights(g))
+    {
+        std::cout<< "Input graph has not non-negative weights.";
+        return 0;
+    }
 
     std::vector<node> H = ApproximationTSPAlgorithm().run(g);
 

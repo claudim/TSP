@@ -3,7 +3,7 @@
 #include "networkit/graph/Graph.hpp"
 #include "TSPLib/TSPGraphReader.h"
 #include "TSPLib/Checker.h"
-#include "TSPLib/TSPGraph.h"
+#include "TSPLib/TSPGraphMaker.h"
 #include "TSPLib/ApproximationTSPAlgorithm.h"
 
 using namespace NetworKit;

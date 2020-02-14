@@ -2,14 +2,14 @@
 // Created by Claudia on 14/02/2020.
 //
 
-#ifndef TSP_TSPGRAPH_H
-#define TSP_TSPGRAPH_H
+#ifndef TSP_TSPGRAPHMAKER_H
+#define TSP_TSPGRAPHMAKER_H
 
 #include "networkit/graph/Graph.hpp"
 
 using namespace NetworKit;
 
-class TSPGraph{
+class TSPGraphMaker{
 
 private:
     /**
@@ -22,7 +22,7 @@ public:
      * @public
      * @brief Constructor
      */
-    TSPGraph();
+    TSPGraphMaker();
 
     /**
      * @public
@@ -58,8 +58,8 @@ public:
      * @public
      * @brief desctuctor
      */
-    ~TSPGraph() = default;
+    ~TSPGraphMaker() = default;
 };
 
 
-#endif //TSP_TSPGRAPH_H
+#endif //TSP_TSPGRAPHMAKER_H

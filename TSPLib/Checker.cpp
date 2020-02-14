@@ -12,11 +12,12 @@ bool Checker::isComplete(const NetworKit::Graph &g) {
 }
 
 bool Checker::isNonNegativeWeights(const NetworKit::Graph &g) {
+    bool nonNegative = true;
     g.forEdges([&](node u, node v, edgeweight w) {
         if (g.weight(u,v)<0)
         {
-            return false;
+            nonNegative = false;
         }
     });
-    return true;
+    return nonNegative;
 }

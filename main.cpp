@@ -25,13 +25,9 @@ int main() {
         return 0;
     }
 
-    // todo check pesi tutti non negativi
+    std::cout <<ck.isNonNegativeWeights(g)<<std::endl;
 
     // todo vedere se il costo del MST è sempre minore o uguale del costo ottimo (validità data dalla dimostrazione dell'algortimo 2-approx)
-
-   /* NetworKit::KruskalMSF t = KruskalMST(g).calculateMST();
-
-    std::vector<node> H = HamiltonianTour().findHamiltonianTour(t);*/
 
     std::vector<node> H = ApproximationTSPAlgorithm().run(g);
 

@@ -7,20 +7,31 @@
 
 #include "networkit/graph/Graph.hpp"
 
+using namespace NetworKit;
+
 class Checker {
 
 public:
 
     /**
+     * @public
      * @brief constructor
      */
     Checker();
 
     /**
+     * @public
      * @brief check if the graph is complete
      * @param g graph to check
      */
     bool isComplete(const NetworKit::Graph &g);
+
+    /**
+     * @public
+     * @brief check if the graph has non-negative weights
+     * @param g graph to check
+     */
+    bool isNonNegativeWeights(const NetworKit::Graph &g);
 
 };
 

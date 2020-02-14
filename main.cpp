@@ -6,13 +6,15 @@
 #include "TSPLib/TSPGraphReader.h"
 #include "TSPLib/KruskalMST.h"
 #include "TSPLib/Checker.h"
+#include "TSPLib/HamiltonianTour.h"
+#include "TSPLib/TSPGraph.h"
 
 using namespace NetworKit;
 
 int main() {
 
     TSPGraphReader gr = TSPGraphReader();
-    Graph g = gr.getGraph("../samples/grafo15.edges");
+    Graph g = gr.getGraph("../samples/grafo5.edges");
     //reader per .edges file
 //    const std::string path = "../samples/grafo5.edges";
 //    EdgeListReader graphReader = EdgeListReader(' ', 0, "#", true, false);
@@ -25,7 +27,7 @@ int main() {
     Checker ck;
     if(!ck.isComplete(g))
     {
-        std::cout<< "Input grpah in not complete.";
+        std::cout<< "Input graph is not complete.";
         return 0;
     }
 //    int n = g.numberOfNodes();
@@ -38,7 +40,7 @@ int main() {
 //    }
     // todo check pesi tutti non negativi
 
-    // todo vedere se il costo del MST è sempre minore del costo ottimo
+    // todo vedere se il costo del MST è sempre minore o uguale del costo ottimo (validità data dalla dimostrazione dell'algortimo 2-approx)
 
     /*//nega i pesi degli archi altrimenti Kruskal restituisce il maximum spanning tree
     g.forEdges([&](node u, node v, edgeweight w) { g.setWeight(u, v, -w); });
@@ -48,25 +50,23 @@ int main() {
     NetworKit::KruskalMSF t = KruskalMST(g).calculateMST();
 
     //g.forEdges([&](node u, node v, edgeweight w) { std::cout<<"arco: (" << u<<","<<v<<" ) " <<w<<std::endl; });
-    t.getForest().forEdges([&](node u, node v, edgeweight w) { std::cout<<"arco: (" << u<<","<<v<<" ) " <<w<<std::endl; });
+    //t.getForest().forEdges([&](node u, node v, edgeweight w) { std::cout<<"arco: (" << u<<","<<v<<" ) " <<w<<std::endl; });
 
-    // todo: per irrobustire l'algoritmo possiamo controllare che il costo del MST sia <= del costo del TSP (validità data dalla dimostrazione dell'algortimo 2-approx)
+    std::vector<node> H = HamiltonianTour().findHamiltonianTour(t);
 
-    std::vector<node> H;
-
-    Traversal::DFSfrom(t.getForest(), 0, [&](node u) {
+    /*Traversal::DFSfrom(t.getForest(), 0, [&](node u) {
         H.push_back(u);
     });
-    H.push_back(0);
+    H.push_back(0);*/
 
-    std::cout << "Tour: ";
+    /*std::cout << "HamiltonianTour: ";
     for (unsigned long i : H) {
         std::cout << i << ' ';
     }
 
     Graph tsp = Graph(g.numberOfNodes(), true, false);
     int i = 0;
-    std::cout << std::endl << "Tour size : " << H.size() << std::endl;
+    std::cout << std::endl << "HamiltonianTour size : " << H.size() << std::endl;
     int tspCost = 0;
     while (i < H.size() - 1) {
         node u = H.at(i);
@@ -75,7 +75,11 @@ int main() {
         i = i + 1;
     }
 
-    std::cout << "Costo Tour: " << tsp.totalEdgeWeight() << std::endl;
+    std::cout << "Costo HamiltonianTour: " << tsp.totalEdgeWeight() << std::endl;
+*/
+    TSPGraph tspGraph = TSPGraph();
+    Graph tsp = tspGraph.findTSPGraph(g,H);
+    std::cout << "Costo tsp: " << tspGraph.getTSPCost()<< std::endl;
 
     return 0;
 

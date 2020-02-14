@@ -15,7 +15,8 @@ class KruskalMST {
 
 private:
     /**
-     *  g is a complete graph with non-negative weights  whose you want to calculate its Minimum Spanning Tree (MST)
+     * @private
+     * g is a complete graph with non-negative weights  whose you want to calculate its Minimum Spanning Tree (MST)
      */
     Graph g;
 

@@ -3,7 +3,7 @@ project(TSP)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(TSP main.cpp)
+add_executable(TSP main.cpp TSPLib/TSPGraphReader.cpp TSPLib/TSPGraphReader.h TSPLib/KruskalMST.cpp TSPLib/KruskalMST.h TSPLib/Checker.cpp TSPLib/Checker.h TSPLib/HamiltonianTour.cpp TSPLib/HamiltonianTour.h TSPLib/TSPGraph.cpp TSPLib/TSPGraph.h)
 
 include_directories(/Library/networkit/extlibs/tlx)
 include_directories(/Library/networkit/include)

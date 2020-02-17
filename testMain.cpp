@@ -37,12 +37,19 @@ int main() {
     tourBestCost["lin105"] = 14379;
     tourBestCost["pa561"] = 2763;
     tourBestCost["pcb442"] = 50778;
+    tourBestCost["att48"] = 33523;
+    tourBestCost["dantzig42"] = 699;
+    tourBestCost["five5"] = 19;
+    tourBestCost["fri26"] = 937;
+    tourBestCost["gr17"] = 2085;
+    tourBestCost["p15"] = 291;
+
     //tourBestCost["gr96"] = 55209; // da controllare
     std::string path = "../samples/realGraph";
    // std::string path = "../samples/realGraph/ulysses16.edges";
     //std::string path = "../samples/realGraph/a280.edges";
     //std::string path = "../samples/realGraph/pr1002.edges";
-   // std::string path = "../samples/grafo5.edges";
+   // std::string path = "../samples/five5.edges";
     TSPGraphReader gr = TSPGraphReader();
     TSPGraphMaker tspGraph = TSPGraphMaker();
     double averageRatio = 0;

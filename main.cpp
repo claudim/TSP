@@ -11,7 +11,7 @@ using namespace NetworKit;
 int main() {
 
     TSPGraphReader gr = TSPGraphReader();
-    Graph g = gr.getGraph("../samples/grafo48.edges");
+    Graph g = gr.getGraph("../samples/att48.edges");
 
     std::cout << g.numberOfEdges() << std::endl;
     std::cout << g.numberOfNodes() << std::endl;

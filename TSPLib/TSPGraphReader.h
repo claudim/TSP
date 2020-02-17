@@ -7,6 +7,8 @@
 
 #include "networkit/graph/Graph.hpp"
 #include "networkit/io/EdgeListReader.hpp"
+#include <iostream>
+#include <fstream>
 
 class TSPGraphReader {
 

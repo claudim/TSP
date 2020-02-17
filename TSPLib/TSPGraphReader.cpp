@@ -15,8 +15,29 @@ namespace {
 
     NetworKit::Graph readEdgesList(const std::string &filename) {
 
-        NetworKit::EdgeListReader graphReader = NetworKit::EdgeListReader(' ', 0, "#", true, false);
+        int firstNode;
+        std::ifstream infile;
+
+        infile.open(filename);
+
+        if (infile.good())
+        {
+            std::string sLine;
+            getline(infile, sLine);
+            //std::cout << sLine <<std::endl;
+            //std::cout << sLine.at(1) <<std::endl;
+            firstNode= sLine.at(0) - '0';
+            //std::cout << firstNode <<std::endl;
+        }
+
+        infile.close();
+
+        NetworKit::EdgeListReader graphReader = NetworKit::EdgeListReader(' ', firstNode, "#", true, false);
         return graphReader.read(filename);
+
+       // NetworKit::EdgeListReader graphReader = NetworKit::EdgeListReader(' ', 0, "#", true, false);
+        //return graphReader.read(filename);
+
 
         //TODO controllare e lanciare eccezione
 

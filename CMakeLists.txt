@@ -2,16 +2,23 @@ cmake_minimum_required(VERSION 3.13)
 project(TSP)
 
 set(CMAKE_CXX_STANDARD 17)
+project(tsp)
+
+include_directories(/Library/networkit/extlibs/tlx)
+include_directories(/Library/networkit/include)
+
+add_subdirectory(TSPLib) #It tells CMake to descend into that folder and look for another CMakeLists.txt.
 
 add_executable(TSP testMain.cpp)
 
-include_directories(/home/networkit/extlibs/tlx)
-include_directories(/home/networkit/include)
-#include_directories(/Library/networkit/DEmidioCode)
-
-
-link_directories(/home/networkit/build-lib)        # -L flags  linker
-#TARGET_LINK_LIBRARIES(TSP /home/networkit/build-TSPlib)
-target_link_libraries(TSP libnetworkit.so)   # -l flags for linking prog target
 target_link_libraries(TSP tsplib)
-add_subdirectory(TSPLib)
+
+#[[
+set(BOOST_ROOT "Users/claudia/boost_1_72_0/boostlib")
+set(Boost_USE_STATIC_LIBS OFF) # enable dynamic linking
+set(Boost_USE_MULTITHREADED ON) # enable multithreading
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost REQUIRED COMPONENTS system)
+]]
+
+

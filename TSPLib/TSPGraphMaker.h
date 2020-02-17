@@ -6,6 +6,7 @@
 #define TSP_TSPGRAPHMAKER_H
 
 #include "networkit/graph/Graph.hpp"
+#include <iostream>
 
 using namespace NetworKit;
 

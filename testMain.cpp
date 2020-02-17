@@ -20,9 +20,22 @@ namespace fs = std::filesystem;
 int main() {
     std::map<std::string, int> tourApproxCost;
     std::map<std::string, int> tourBestCost;
-    tourBestCost["a280"] = 2579 ;
+    tourBestCost["a280"] = 2579;
     tourBestCost["pr1002"] = 259045 ;
     tourBestCost["ulysses16"] = 76 ;
+    //tourBestCost["att48"] = 10628 ;  // controllare
+    tourBestCost["berlin52"] = 7542;
+    //tourBestCost["eil101"] = 7542; // da calcolare il costo ottimo partendo dal tour
+    tourBestCost["eil51"] = 426;
+    tourBestCost["eil76"] = 538;
+    tourBestCost["gr120"] = 6942;
+    tourBestCost["gr24"] = 1272;
+    tourBestCost["gr48"] = 5046;
+    tourBestCost["kroA100"] = 21282;
+    tourBestCost["kroC100"] = 20749;
+    tourBestCost["kroD100"] = 21294;
+    tourBestCost["lin105"] = 14379;
+    //tourBestCost["gr96"] = 55209; // da controllare
     std::string path = "../samples/realGraph";
    // std::string path = "../samples/realGraph/ulysses16.edges";
     //std::string path = "../samples/realGraph/a280.edges";

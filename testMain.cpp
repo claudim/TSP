@@ -63,17 +63,14 @@ int main() {
             //Graph g = gr.getGraph(path);
             if(Checker::isComplete(g) && Checker::isNonNegativeWeights(g))
             {
-                /*H = ApproximationTSPAlgorithm().run(g);
+                H = ApproximationTSPAlgorithm().run(g);
                 Graph tspG = tspGraph.findTSPGraph(g, H);
                 // insert a tour approx cost
                 tourApproxCost[item.path().filename().stem()] = tspG.totalEdgeWeight(); // item.path().filename().stem() = get filename without file extension
                 Graph mst = KruskalMST(g).calculateMST().getForest();
                 double mstCostValue = 0;
                 mst.forEdges([&](node u, node v, edgeweight w) { mstCostValue =  mstCostValue + g.weight(u, v); });
-                mstCost[item.path().filename().stem()] = mstCostValue;*/
-            }
-            else{
-                std::cout<<item.path() <<std::endl;
+                mstCost[item.path().filename().stem()] = mstCostValue;
             }
         }
     }

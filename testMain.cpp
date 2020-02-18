@@ -53,8 +53,7 @@ int main() {
     std::string path = "../samples/realGraph";
     TSPGraphReader gr = TSPGraphReader();
     TSPGraphMaker tspGraph = TSPGraphMaker();
-    double averageRatio = 0;
-    double sum = 0;
+    double averageRatio = 0, averageRatioMST=0, sum = 0, sumMST = 0;
     //std::cout<< "averageRatio: "<<averageRatio<<std::endl;
     for (const auto &item : fs::directory_iterator(path)) {
         if(item.path().extension() == ".edges") {
@@ -78,15 +77,20 @@ int main() {
         std::cout.precision(5);
         //double ratio  = tourBestCost[x.first] / x.second;
         double ratio = double(x.second) / tourBestCost[x.first];
+        double ratioMST = double(x.second) / mstCost[x.first];
         std::cout << "costobest " << tourBestCost[x.first] << std::endl;
         std::cout << "costoapprox " << x.second << std::endl;
         std::cout << std::fixed << "ratio " << x.first << " :" << ratio << std::endl;
         sum = sum + ratio;
 
+        sumMST = sumMST + ratioMST;
+
     }
     averageRatio = sum / tourApproxCost.size();
+    averageRatioMST = sumMST / tourApproxCost.size();
 
     std::cout << "average: " << averageRatio << std::endl;
+    std::cout << "average MST: " << averageRatioMST << std::endl;
 
     return 0;
 

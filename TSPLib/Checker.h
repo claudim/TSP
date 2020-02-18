@@ -6,6 +6,7 @@
 #define TSP_CHECKER_H
 
 #include "networkit/graph/Graph.hpp"
+#include "iostream"
 
 using namespace NetworKit;
 
@@ -22,16 +23,18 @@ public:
     /**
      * @public
      * @brief check if the graph is complete
+     * @static
      * @param g graph to check
      */
-    bool isComplete(const NetworKit::Graph &g);
+    static bool isComplete(const NetworKit::Graph &g);
 
     /**
      * @public
      * @brief check if the graph has non-negative weights
+     * @static
      * @param g graph to check
      */
-    bool isNonNegativeWeights(const NetworKit::Graph &g);
+    static bool isNonNegativeWeights(const NetworKit::Graph &g);
 
 
 };

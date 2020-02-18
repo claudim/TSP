@@ -16,9 +16,9 @@
 using namespace NetworKit;
 namespace fs = std::filesystem;
 
-std::map<std::string, int> loadBestCost()
+std::map<std::string, edgeweight> loadBestCost()
 {
-    std::map<std::string, int> tourBestCost;
+    std::map<std::string, edgeweight > tourBestCost;
     tourBestCost["a280"] = 2579;
     tourBestCost["pr1002"] = 259045 ;
     //tourBestCost["ulysses16"] = 76 ; // controllare
@@ -47,9 +47,9 @@ std::map<std::string, int> loadBestCost()
 }
 
 int main() {
-    std::map<std::string, int> tourApproxCost;
-    std::map<std::string, int> mstCost;
-    std::map<std::string, int> tourBestCost = loadBestCost();
+    std::map<std::string, edgeweight > tourApproxCost;
+    std::map<std::string, edgeweight > mstCost;
+    std::map<std::string, edgeweight > tourBestCost = loadBestCost();
     std::string path = "../samples/realGraph";
     TSPGraphReader gr = TSPGraphReader();
     TSPGraphMaker tspGraph = TSPGraphMaker();
@@ -73,7 +73,7 @@ int main() {
             }
         }
     }
-    for (std::map<std::string, int>::value_type &x : tourApproxCost) {
+    for (std::map<std::string, edgeweight >::value_type &x : tourApproxCost) {
         std::cout.precision(5);
         //double ratio  = tourBestCost[x.first] / x.second;
         double ratio = double(x.second) / tourBestCost[x.first];

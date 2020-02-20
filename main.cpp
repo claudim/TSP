@@ -32,7 +32,7 @@ int main() {
 
     std::vector<node> H = ApproximationTSPAlgorithm().run(g);
 
-    TSPGraph tspGraph = TSPGraph();
+    TSPGraphMaker tspGraph = TSPGraphMaker();
     Graph tsp = tspGraph.findTSPGraph(g,H);
     std::cout << "Costo tsp: " << tspGraph.getTSPCost()<< std::endl;
 

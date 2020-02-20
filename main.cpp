@@ -5,16 +5,16 @@
 #include "TSPLib/Checker.h"
 #include "TSPLib/TSPGraphMaker.h"
 #include "TSPLib/ApproximationTSPAlgorithm.h"
-
+//"../samples/realGraph/att48.edges"
 using namespace NetworKit;
 
-int main() {
+int main(int argc, char** argv) {
 
     TSPGraphReader gr = TSPGraphReader();
-    Graph g = gr.getGraph("../samples/realGraph/att48.edges");
+    Graph g = gr.getGraph(argv[1]);
 
-    std::cout << g.numberOfEdges() << std::endl;
-    std::cout << g.numberOfNodes() << std::endl;
+    std::cout << "Nodes: " << g.numberOfNodes() << std::endl;
+    std::cout << "Edges: "<< g.numberOfEdges() << std::endl;
 
     // check for completed graph
     Checker ck;
@@ -34,7 +34,12 @@ int main() {
 
     TSPGraphMaker tspGraph = TSPGraphMaker();
     Graph tsp = tspGraph.findTSPGraph(g,H);
-    std::cout << "Costo tsp: " << tspGraph.getTSPCost()<< std::endl;
+
+        std::cout << "Tour: " ;
+
+    for (auto i = H.begin(); i != H.end(); ++i)
+        std::cout << *i << ' ';
+    std::cout << std::endl << "Tour cost: " << tspGraph.getTSPCost()<< std::endl;
 
     return 0;
 

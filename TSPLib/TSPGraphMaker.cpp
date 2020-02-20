@@ -15,7 +15,6 @@ Graph TSPGraphMaker::findTSPGraph(const Graph& g, std::vector<node> h) {
         node u = h.at(i);
         node v = h.at(i + 1);
         m_tsp.addEdge(u, v, g.weight(u, v));
-
         i = i + 1;
     }
     return m_tsp;

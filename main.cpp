@@ -11,7 +11,7 @@ using namespace NetworKit;
 int main() {
 
     TSPGraphReader gr = TSPGraphReader();
-    Graph g = gr.getGraph("../samples/att48.edges");
+    Graph g = gr.getGraph("../samples/realGraph/att48.edges");
 
     std::cout << g.numberOfEdges() << std::endl;
     std::cout << g.numberOfNodes() << std::endl;
@@ -32,7 +32,7 @@ int main() {
 
     std::vector<node> H = ApproximationTSPAlgorithm().run(g);
 
-    TSPGraph tspGraph = TSPGraph();
+    TSPGraphMaker tspGraph = TSPGraphMaker();
     Graph tsp = tspGraph.findTSPGraph(g,H);
     std::cout << "Costo tsp: " << tspGraph.getTSPCost()<< std::endl;
 

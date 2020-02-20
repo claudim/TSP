@@ -6,7 +6,6 @@
 #include <filesystem>
 #include <vector>
 #include "networkit/graph/Graph.hpp"
-#include "networkit/graph/DFS.hpp"
 #include "TSPLib/TSPGraphReader.h"
 #include "TSPLib/KruskalMST.h"
 #include "TSPLib/Checker.h"
@@ -15,6 +14,8 @@
 
 using namespace NetworKit;
 namespace fs = std::filesystem;
+
+const int OPERAZIONE = 1; // cambiare a seconda dell'operazione che si vuole eseguire
 
 std::map<std::string, edgeweight> loadBestCost()
 {
@@ -46,6 +47,80 @@ std::map<std::string, edgeweight> loadBestCost()
     return tourBestCost;
 }
 
+void writeOnCSVFile(const std::string& graphName, edgeweight mstCost,edgeweight approxCost, edgeweight bestCost, double approxRatio, double mstRatio)
+{
+    std::ofstream myfile;
+    myfile.open ("/Users/claudia/Desktop/example.csv", std::ios_base::app); // append instead of overwrite
+    myfile << graphName<<","<< mstCost<<","<< approxCost<<","<<  bestCost<<","<<  approxRatio<<","<< mstRatio <<"\n";
+    myfile.close();
+}
+
+void writeOnCSVFileMeanVariance(const std::string& graphName,double mean, double stdDeviation, double uniformDistributionMean, double uniformDistributionStdDeviation, double min, double max, double meanDifference, double stdDeviationDifference)
+{
+    std::ofstream myfile;
+    myfile.open ("/Users/claudia/Desktop/meanVariance.csv", std::ios_base::app); // append instead of overwrite
+    myfile << graphName<<","<< mean<<","<< stdDeviation <<","<< uniformDistributionMean <<","<<uniformDistributionStdDeviation<<","<<min <<","<< max <<","<<meanDifference<<","<<stdDeviationDifference<<"\n";
+    myfile.close();
+}
+
+void writeOnCSVFileDistribution(const std::string& graphName,double x, double y)
+{
+    std::string path = "/Users/claudia/Desktop/";
+    path.append(graphName);
+    path.append(".txt");
+    std::ofstream myfile;
+    myfile.open (path, std::ios_base::app); // append instead of overwrite
+    myfile << x<<","<< y <<"\n";
+    myfile.close();
+}
+
+double stdDeviationComputation(Graph &g, double mean) {
+    double variance = 0.0, stdDeviation;
+    g.forEdges([&](node u, node v, edgeweight w) { variance += pow(g.weight(u, v) - mean, 2); });
+    variance = variance/ g.numberOfEdges();
+    return stdDeviation = sqrt(variance);
+
+}
+
+double meanComputation(Graph &g){
+    double sum = 0.0, mean=0.0;
+    g.forEdges([&](node u, node v, edgeweight w) { sum += g.weight(u, v); });
+    return mean = sum / g.numberOfEdges();
+
+}
+
+double meanComputationUniformDistribution(double min, double max){
+    double  mean=0.0;
+    mean = (min + max)/2;
+    return mean;
+}
+
+double stdDeviationComputationUniformDistribution(double min, double max) {
+    double variance = 0.0, stdDeviation;
+    variance = pow(max - min, 2) /12;
+    return stdDeviation = sqrt(variance);
+}
+
+double getGraphMaxWeight(Graph &g)
+{
+    double maxWeight = 0.0;
+    g.forEdges([&](node u, node v, edgeweight w) {
+
+        if (maxWeight < g.weight(u, v)) maxWeight = (double) g.weight(u, v);
+    });
+    return maxWeight;
+}
+
+double getGraphMinWeight(Graph &g)
+{
+    double minWeight = -1;;
+    g.forEdges([&](node u, node v, edgeweight w) {
+        if ((minWeight == -1 || minWeight > g.weight(u, v)) && g.weight(u,v) > 0) minWeight =  g.weight(u, v);
+
+    });
+    return minWeight;
+}
+
 int main() {
     std::map<std::string, edgeweight > tourApproxCost;
     std::map<std::string, edgeweight > mstCost;
@@ -62,18 +137,49 @@ int main() {
             //Graph g = gr.getGraph(path);
             if(Checker::isComplete(g) && Checker::isNonNegativeWeights(g))
             {
-                H = ApproximationTSPAlgorithm().run(g);
-                Graph tspG = tspGraph.findTSPGraph(g, H);
-                // insert a tour approx cost
-                tourApproxCost[item.path().filename().stem()] = tspG.totalEdgeWeight(); // item.path().filename().stem() = get filename without file extension
-                Graph mst = KruskalMST(g).calculateMST().getForest();
-                double mstCostValue = 0;
-                mst.forEdges([&](node u, node v, edgeweight w) { mstCostValue =  mstCostValue + g.weight(u, v); });
-                mstCost[item.path().filename().stem()] = mstCostValue;
+                switch (OPERAZIONE) {
+                    case 0: // compute the mean and the variance and compute the mean and the variance if g has a uniform distribution
+                    {
+                        double min = getGraphMinWeight(g);
+                        double max = getGraphMaxWeight(g);
+                        double mean = meanComputation(g);
+                        double stdDeviation = stdDeviationComputation(g, mean);
+                        double uniformDistributionStdDeviation = stdDeviationComputationUniformDistribution(min, max);
+                        double uniformDistributionMean = meanComputationUniformDistribution(min, max);
+                        double meanDifference = uniformDistributionMean - mean;
+                        double stdDeviationDifference = uniformDistributionStdDeviation - stdDeviation;
+                        writeOnCSVFileMeanVariance(item.path().filename().stem(), mean, stdDeviation, uniformDistributionMean,uniformDistributionStdDeviation, min, max, meanDifference, stdDeviationDifference);
+                        break;
+                    }
+                    case 1:
+                    {
+                        double max =  getGraphMaxWeight(g);
+                        std::map<edgeweight , int > A;
+                        g.forEdges([&](node u, node v, edgeweight w) {
+                            A[w] = A[w]+1;
+                        });
+                        for (std::map<edgeweight , int >::value_type &x : A) {
+                            writeOnCSVFileDistribution(item.path().filename().stem(),x.first, x.second);
+                        }
+                        break;
+                    }
+                    default: // esegui algoritmo
+                        H = ApproximationTSPAlgorithm().run(g);
+                        Graph tspG = tspGraph.findTSPGraph(g, H);
+                        // insert a tour approx cost
+                        tourApproxCost[item.path().filename().stem()] = tspG.totalEdgeWeight(); // item.path().filename().stem() = get filename without file extension
+                        Graph mst = KruskalMST(g).calculateMST().getForest();
+                        double mstCostValue = 0;
+                        mst.forEdges(
+                                [&](node u, node v, edgeweight w) { mstCostValue = mstCostValue + g.weight(u, v); });
+                        mstCost[item.path().filename().stem()] = mstCostValue;
+                        break;
+                }
+
             }
         }
     }
-    for (std::map<std::string, edgeweight >::value_type &x : tourApproxCost) {
+    /*for (std::map<std::string, edgeweight >::value_type &x : tourApproxCost) {
         std::cout.precision(5);
         //double ratio  = tourBestCost[x.first] / x.second;
         double ratio = double(x.second) / tourBestCost[x.first];
@@ -82,8 +188,8 @@ int main() {
         std::cout << "costoapprox " << x.second << std::endl;
         std::cout << std::fixed << "ratio " << x.first << " :" << ratio << std::endl;
         sum = sum + ratio;
-
         sumMST = sumMST + ratioMST;
+        writeOnCSVFile(x.first,mstCost[x.first],x.second,tourBestCost[x.first],ratio, ratioMST);
 
     }
     averageRatio = sum / tourApproxCost.size();
@@ -91,8 +197,12 @@ int main() {
 
     std::cout << "average: " << averageRatio << std::endl;
     std::cout << "average MST: " << averageRatioMST << std::endl;
+     */
 
     return 0;
 
 }
+
+
+
 

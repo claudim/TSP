@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
     TSPGraphMaker tspGraph = TSPGraphMaker();
     Graph tsp = tspGraph.findTSPGraph(g,H);
 
-        std::cout << "Tour: " ;
+    std::cout << "Tour: " ;
 
     for (auto i = H.begin(); i != H.end(); ++i)
         std::cout << *i << ' ';

@@ -26,5 +26,5 @@ TSP takes graph in edgelist format. Some sample graphs are in the samples direct
 
 ## Authors
 
-     * Claudia Di Marco
-     * Riccardo Mantini
+ * Claudia Di Marco
+ * Riccardo Mantini

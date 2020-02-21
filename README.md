@@ -1,6 +1,8 @@
 # Algorithm Engineering - 2-Approximation algorithm implementation for Traveling Salesman Problem
 
-## Students: Claudia Di Marco - Riccardo Mantini
+A C++ implementation of a simple 2-Approximation algorithm for the Metric Traveling Salesman Problem.
+
+## Getting Started
 
 ### Requirements
 
@@ -9,15 +11,20 @@
 3. C++ 17
 4. CMake 3.13
 
-### Setup
+### Installing
 
-1.	Update CMakeList to link networkit library
-2.	Create a building folder in the root directory e.g. 'mkdir build'
-3.	Move in build directory and run 'cmake ../'
-4.	Run 'cmake --build .'
+1.	Update CMakeList to link NetworKit library
+2.	Create a building folder in the root directory e.g. `mkdir build`
+3.	Move in build directory and run `cmake ../`
+4.	Run `cmake --build .`
 
 ### Usage
 
 `./TSP path/to/your/graph/`
 
 TSP takes graph in edgelist format. Some sample graphs are in the samples directory.
+
+## Authors
+
+     * Claudia Di Marco
+     * Riccardo Mantini
